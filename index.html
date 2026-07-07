@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <meta name="description" content="Ayaan Khan — Applikationsentwickler in the making, Zurich.">
+  <title>Ayaan Khan — Portfolio</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Custom cursor (pointer-only, activated via JS) -->
+  <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+
+  <header class="nav">
+    <a href="#top" class="nav__logo magnetic">AK<span class="nav__logo-dot">.</span></a>
+    <nav class="nav__links" aria-label="Main navigation">
+      <a href="#about" class="magnetic">About</a>
+      <a href="#timeline" class="magnetic">Timeline</a>
+      <a href="#projects" class="magnetic">Projects</a>
+      <a href="#skills" class="magnetic">Skills</a>
+      <a href="#contact" class="magnetic">Contact</a>
+    </nav>
+  </header>
+
+  <main id="top">
+
+    <!-- ============ HERO ============ -->
+    <section class="hero">
+      <canvas id="hero-canvas" aria-hidden="true"></canvas>
+      <div class="hero__glow" aria-hidden="true"></div>
+      <div class="hero__inner">
+        <p class="hero__kicker">Zurich, Switzerland</p>
+        <h1 class="hero__name">Ayaan<br>Khan</h1>
+        <p class="hero__line">
+          Building things at Google. Applikationsentwickler in the making.
+          <span class="tooltip" data-tip="Grüezi mitenand! 🫡"><svg class="flag-ch" viewBox="0 0 32 32" aria-label="Switzerland" role="img"><rect width="32" height="32" rx="6" fill="#da291c"/><rect x="13" y="6.5" width="6" height="19" fill="#fff"/><rect x="6.5" y="13" width="19" height="6" fill="#fff"/></svg></span>
+        </p>
+        <div class="hero__cta">
+          <a href="#projects" class="btn btn--primary magnetic">See my work</a>
+          <a href="#contact" class="btn btn--ghost magnetic">Get in touch</a>
+        </div>
+      </div>
+      <a href="#about" class="hero__scroll magnetic" aria-label="Scroll to about section">
+        <span class="hero__scroll-line"></span>
+      </a>
+    </section>
+
+    <!-- ============ ABOUT ============ -->
+    <section class="section" id="about">
+      <div class="section__inner">
+        <h2 class="section__title reveal"><span class="section__num">01</span>About</h2>
+        <div class="about__grid">
+          <div class="about__text">
+            <p class="reveal">
+              Zurich born and raised. I switch between <strong>German, Swiss German,
+              English and Hindi/Urdu</strong> without thinking about it — code is
+              just the fifth language.
+            </p>
+            <p class="reveal">
+              Currently at BBC, learning how to build great things before the real
+              thing starts: an <strong>Applikationsentwicklung EFZ</strong>
+              apprenticeship at <strong>Google</strong>.
+            </p>
+            <p class="reveal">
+              Off the keyboard you'll find me at John&nbsp;Reed lifting, or out
+              chasing a new <span class="tooltip" data-tip="Sub-50 loading… ⏳">10k&nbsp;PR</span>.
+            </p>
+          </div>
+          <ul class="about__facts reveal">
+            <li><span>Base</span>Zurich <svg class="flag-ch" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="6" fill="#da291c"/><rect x="13" y="6.5" width="6" height="19" fill="#fff"/><rect x="6.5" y="13" width="19" height="6" fill="#fff"/></svg></li>
+            <li><span>Languages</span>DE · CH-DE · EN · HI/UR</li>
+            <li><span>Now</span>Basisjahr @ BBC</li>
+            <li><span>Next</span>EFZ @ Google</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TIMELINE ============ -->
+    <section class="section" id="timeline">
+      <div class="section__inner">
+        <h2 class="section__title reveal"><span class="section__num">02</span>Timeline</h2>
+        <ol class="timeline">
+          <li class="timeline__item reveal">
+            <div class="timeline__dot timeline__dot--done"></div>
+            <p class="timeline__date">March 2026</p>
+            <h3 class="timeline__title">Passed the ZAP</h3>
+            <p class="timeline__desc">Cleared the entrance exam — the first gate on the way to the apprenticeship.</p>
+          </li>
+          <li class="timeline__item reveal">
+            <div class="timeline__dot"></div>
+            <p class="timeline__date">Aug 3, 2026</p>
+            <h3 class="timeline__title">Day one at Google</h3>
+            <p class="timeline__desc">Applikationsentwicklung EFZ apprenticeship begins in Zurich.</p>
+          </li>
+          <li class="timeline__item reveal">
+            <div class="timeline__dot"></div>
+            <p class="timeline__date">Aug 18, 2026</p>
+            <h3 class="timeline__title">TBZ starts</h3>
+            <p class="timeline__desc">Berufsschule kicks off — theory to back up the practice.</p>
+          </li>
+          <li class="timeline__item reveal">
+            <div class="timeline__dot timeline__dot--now"></div>
+            <p class="timeline__date">Now</p>
+            <h3 class="timeline__title">Building this site</h3>
+            <p class="timeline__desc">Finishing the Basisjahr at BBC and shipping side projects — like the one you're looking at.</p>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- ============ PROJECTS ============ -->
+    <section class="section" id="projects">
+      <div class="section__inner">
+        <h2 class="section__title reveal"><span class="section__num">03</span>Projects</h2>
+        <div class="projects">
+
+          <article class="project reveal magnetic-card">
+            <button class="project__head" aria-expanded="false">
+              <div>
+                <h3 class="project__title">Inside Glattbrugg</h3>
+                <p class="project__oneliner">A web deep-dive into the place I grew up — Glattbrugg, beyond the flight path.</p>
+              </div>
+              <span class="project__chevron" aria-hidden="true">↓</span>
+            </button>
+            <div class="project__body">
+              <div class="project__body-inner">
+                <p>A static site documenting my hometown: the spots that matter, the people, and what living next to an airport actually feels like. Built to practice layout, typography and storytelling on the web.</p>
+                <ul class="project__tags"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
+              </div>
+            </div>
+          </article>
+
+          <article class="project reveal magnetic-card">
+            <button class="project__head" aria-expanded="false">
+              <div>
+                <h3 class="project__title">Screen Time Reality Check</h3>
+                <p class="project__oneliner">Turns your weekly screen time into uncomfortably honest numbers.</p>
+              </div>
+              <span class="project__chevron" aria-hidden="true">↓</span>
+            </button>
+            <div class="project__body">
+              <div class="project__body-inner">
+                <p>Enter your weekly screen time and it tells you what that adds up to over a year — in books unread, runs not run and hours of sleep lost. A small tool with a big guilt trip, built in vanilla JS.</p>
+                <ul class="project__tags"><li>JavaScript</li><li>CSS</li></ul>
+              </div>
+            </div>
+          </article>
+
+          <article class="project reveal magnetic-card">
+            <button class="project__head" aria-expanded="false">
+              <div>
+                <h3 class="project__title">Gmail Digest Bot</h3>
+                <p class="project__oneliner">An n8n workflow on my homelab that turns inbox chaos into one clean daily digest.</p>
+              </div>
+              <span class="project__chevron" aria-hidden="true">↓</span>
+            </button>
+            <div class="project__body">
+              <div class="project__body-inner">
+                <p>Self-hosted n8n instance running on my homelab. A scheduled workflow pulls new mail via the Gmail API, groups and summarizes it, and delivers a single digest every morning — so I open my inbox once instead of forty times.</p>
+                <ul class="project__tags"><li>n8n</li><li>Gmail API</li><li>Homelab</li></ul>
+              </div>
+            </div>
+          </article>
+
+          <article class="project reveal magnetic-card">
+            <button class="project__head" aria-expanded="false">
+              <div>
+                <h3 class="project__title">Prayer Times Widget</h3>
+                <p class="project__oneliner">An iOS home-screen widget showing today's prayer times for Zurich.</p>
+              </div>
+              <span class="project__chevron" aria-hidden="true">↓</span>
+            </button>
+            <div class="project__body">
+              <div class="project__body-inner">
+                <p>Written in JavaScript with Scriptable. Fetches prayer times for Zurich, caches them for offline use, and highlights the next upcoming prayer with a countdown — glanceable right from the home screen.</p>
+                <ul class="project__tags"><li>Scriptable</li><li>JavaScript</li><li>iOS</li></ul>
+              </div>
+            </div>
+          </article>
+
+          <article class="project reveal magnetic-card">
+            <button class="project__head" aria-expanded="false">
+              <div>
+                <h3 class="project__title">RotFeed</h3>
+                <p class="project__oneliner">An infinite feed of pure brainrot — satire that knows exactly how long you've been scrolling.</p>
+              </div>
+              <span class="project__chevron" aria-hidden="true">↓</span>
+            </button>
+            <div class="project__body">
+              <div class="project__body-inner">
+                <p>A parody of doomscrolling: an endless feed of nonsense with a timer quietly counting your session. The longer you scroll, the more the feed calls you out. Making a point, one flick of the thumb at a time.</p>
+                <ul class="project__tags"><li>JavaScript</li><li>Satire</li></ul>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SKILLS ============ -->
+    <section class="section" id="skills">
+      <div class="section__inner">
+        <h2 class="section__title reveal"><span class="section__num">04</span>Skills</h2>
+        <ul class="skills">
+          <li class="skill reveal magnetic-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/html5/html5-original.svg" alt="" width="44" height="44" loading="lazy">
+            <span>HTML5</span>
+          </li>
+          <li class="skill reveal magnetic-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/css3/css3-original.svg" alt="" width="44" height="44" loading="lazy">
+            <span>CSS3</span>
+          </li>
+          <li class="skill reveal magnetic-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/javascript/javascript-original.svg" alt="" width="44" height="44" loading="lazy">
+            <span>JavaScript</span>
+          </li>
+          <li class="skill reveal magnetic-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/python/python-original.svg" alt="" width="44" height="44" loading="lazy">
+            <span>Python</span>
+          </li>
+          <li class="skill reveal magnetic-card">
+            <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/git/git-original.svg" alt="" width="44" height="44" loading="lazy">
+            <span>Git</span>
+          </li>
+          <li class="skill reveal magnetic-card">
+            <img class="skill__icon--invert" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/github/github-original.svg" alt="" width="44" height="44" loading="lazy">
+            <span>GitHub</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ============ CONTACT ============ -->
+    <section class="section" id="contact">
+      <div class="section__inner">
+        <h2 class="section__title reveal"><span class="section__num">05</span>Contact</h2>
+        <div class="contact__grid">
+          <div class="contact__info">
+            <p class="reveal contact__lead">Got a project, a question, or a faster 10k route? My inbox is open.</p>
+            <a class="contact__link reveal magnetic" href="mailto:ayaan.zurich@gmail.com">
+              <span class="contact__link-label">Email</span>
+              ayaan.zurich@gmail.com
+            </a>
+            <a class="contact__link reveal magnetic" href="https://github.com/ayaan-software1" target="_blank" rel="noopener noreferrer">
+              <span class="contact__link-label">GitHub</span>
+              github.com/ayaan-software1
+            </a>
+          </div>
+          <!-- Replace YOUR_FORM_ID with your Formspree form ID (formspree.io → New form) -->
+          <form class="contact__form reveal" id="contact-form" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+            <label>
+              <span>Name</span>
+              <input type="text" name="name" required autocomplete="name" placeholder="Your name">
+            </label>
+            <label>
+              <span>Email</span>
+              <input type="email" name="email" required autocomplete="email" placeholder="you@example.com">
+            </label>
+            <label>
+              <span>Message</span>
+              <textarea name="message" rows="5" required placeholder="Grüezi Ayaan, …"></textarea>
+            </label>
+            <button type="submit" class="btn btn--primary magnetic">Send message</button>
+            <p class="contact__status" id="form-status" role="status"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Made with <span class="tooltip" data-tip="…and a lot of coffee ☕">♥</span> in Zürich — © 2026 Ayaan Khan</p>
+  </footer>
+
+  <!-- GSAP + ScrollTrigger -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="js/main.js"></script>
+  <!-- Three.js is dynamically imported inside hero3d.js on capable devices only -->
+  <script src="js/hero3d.js"></script>
+</body>
+</html>
