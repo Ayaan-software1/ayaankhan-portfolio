@@ -28,13 +28,18 @@
       dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
     }, { passive: true });
 
-    // Ring trails behind with a soft lerp
-    (function trail() {
-      ringX += (mouseX - ringX) * 0.16;
-      ringY += (mouseY - ringY) * 0.16;
+    // Ring trails behind with a soft lerp (~180ms to catch up).
+    // Time-based smoothing so the feel doesn't change with frame rate.
+    let lastTrail = performance.now();
+    (function trail(now) {
+      const dt = Math.min((now - lastTrail) / 1000, 0.1) || 0.016;
+      lastTrail = now;
+      const k = 1 - Math.exp(-dt / 0.06);
+      ringX += (mouseX - ringX) * k;
+      ringY += (mouseY - ringY) * k;
       ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
       requestAnimationFrame(trail);
-    })();
+    })(lastTrail);
 
     // Grow the ring over interactive elements
     const hoverTargets = "a, button, .magnetic-card, .tooltip";
@@ -69,17 +74,58 @@
   if (window.gsap && window.ScrollTrigger && !reducedMotion) {
     gsap.registerPlugin(ScrollTrigger);
 
+    const pendingReveals = new Map();
+
+    const showInstantly = (el) => {
+      const st = pendingReveals.get(el);
+      if (st) {
+        st.kill();
+        pendingReveals.delete(el);
+      }
+      gsap.set(el, { opacity: 1, y: 0, overwrite: "auto" });
+    };
+
     gsap.utils.toArray(".reveal").forEach((el) => {
-      gsap.from(el, {
-        opacity: 0,
-        y: 36,
-        duration: 0.8,
-        ease: "power3.out",
-        scrollTrigger: {
-          trigger: el,
-          start: "top 88%",
-          toggleActions: "play none none none",
+      gsap.set(el, { opacity: 0, y: 28 });
+      const st = ScrollTrigger.create({
+        trigger: el,
+        start: "top 92%",
+        once: true,
+        onEnter: (self) => {
+          // On fast manual scrolls, snap instead of tweening so sections
+          // never sit invisible mid-flight and flash the page black.
+          if (Math.abs(self.getVelocity()) > 1800) {
+            showInstantly(el);
+          } else {
+            pendingReveals.delete(el);
+            gsap.to(el, {
+              opacity: 1,
+              y: 0,
+              duration: 0.6,
+              ease: "power3.out",
+              overwrite: "auto",
+            });
+          }
         },
+      });
+      pendingReveals.set(el, st);
+    });
+
+    // Nav jumps: before the smooth scroll starts, instantly reveal
+    // everything between here and the target. Deterministic — doesn't
+    // rely on scroll velocity or frame rate, so no black flash.
+    document.querySelectorAll('a[href^="#"]').forEach((link) => {
+      link.addEventListener("click", () => {
+        const target = document.querySelector(link.getAttribute("href"));
+        if (!target) return;
+        // One viewport past wherever we land, whichever direction we jump
+        const targetTop = window.scrollY + target.getBoundingClientRect().top;
+        const limit = Math.max(window.scrollY, targetTop) + window.innerHeight;
+        pendingReveals.forEach((st, el) => {
+          if (window.scrollY + el.getBoundingClientRect().top < limit) {
+            showInstantly(el);
+          }
+        });
       });
     });
   }
@@ -124,7 +170,7 @@
   /* ---------- Easter egg: console greeting ---------- */
   console.log(
     "%c👋 Grüezi!",
-    "font-size: 28px; font-weight: bold; color: #ff4655;"
+    "font-size: 28px; font-weight: bold; color: #e9e9ec;"
   );
   console.log(
     "%cSnooping in the console? Respect. That's how it starts.\n→ github.com/ayaan-software1",
