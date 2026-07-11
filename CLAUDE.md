@@ -54,5 +54,4 @@ Unfocused/automated Chrome windows throttle `requestAnimationFrame` to ~1fps, wh
 
 ## Known open items
 
-- The contact form posts to `https://formspree.io/f/YOUR_FORM_ID` — a placeholder that must be replaced with a real Formspree form ID before the form works.
 - `index.html` has `<meta name="robots" content="noindex, nofollow">`, which deliberately keeps the site out of search results (robots.txt itself is permissive). Don't remove the meta tag unless the owner asks to make the site indexable.
