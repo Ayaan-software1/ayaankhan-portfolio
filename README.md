@@ -10,12 +10,11 @@ Just open `index.html` in a browser, or serve the folder:
 python -m http.server 8000
 ```
 
-## Before going live
+## Notes
 
-1. **Formspree**: create a form at [formspree.io](https://formspree.io), then replace
-   `YOUR_FORM_ID` in the `<form action=…>` in `index.html`.
-2. The site ships with `<meta name="robots" content="noindex, nofollow">` — remove it
-   if you ever want search engines to index the site.
+- The contact form posts to Formspree (form ID already configured in `index.html`).
+- The site ships with `<meta name="robots" content="noindex, nofollow">` — remove it
+  if you ever want search engines to index the site.
 
 ## Deploy to GitHub Pages (custom domain ayaankhan.dev)
 
@@ -42,7 +41,9 @@ python -m http.server 8000
 index.html        one-page site (hero, about, timeline, projects, skills, contact)
 css/style.css     dark theme, custom cursor, tooltips, reveal styles
 js/main.js        cursor + magnetic hover, GSAP scroll reveals, accordions, form
+js/hero-text.js   particle text effect on the hero name (desktop only)
 js/hero3d.js      Three.js wireframe hero (desktop only; gradient fallback elsewhere)
+img/              project thumbnails (16:9 screenshots)
 favicon.svg       favicon
 CNAME             custom domain for GitHub Pages
 ```
