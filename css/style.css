@@ -159,12 +159,27 @@ body.no-3d .hero__glow { display: block; }
 }
 
 .hero__name {
+  position: relative;
   font-family: var(--font-head);
   font-weight: 700;
   font-size: clamp(3.2rem, 11vw, 7.5rem);
   line-height: 0.98;
   letter-spacing: -0.02em;
   margin-bottom: 1.5rem;
+}
+
+/* Particle heading (hero-text.js, fine pointers only): the canvas overlays
+   the h1 with bleed for scattered dots; the real text stays in the DOM for
+   layout and screen readers, just painted transparent. */
+.hero__name-canvas {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero__name.has-particles {
+  color: transparent;
+  user-select: none;
 }
 
 .hero__line {
