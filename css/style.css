@@ -591,6 +591,28 @@ body.no-3d .hero__glow { display: block; }
 }
 .footer .tooltip { color: var(--accent); }
 
+.legal {
+  margin-top: 1rem;
+  display: inline-block;
+  text-align: left;
+}
+.legal summary {
+  cursor: pointer;
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.legal summary:hover { color: var(--text); }
+.legal__body {
+  margin-top: 0.9rem;
+  max-width: 32rem;
+  font-size: 0.85rem;
+  line-height: 1.6;
+}
+.legal__body p + p { margin-top: 0.75rem; }
+.legal__body strong { color: var(--text); }
+
 /* ============ Swiss flag (inline SVG — flag emoji doesn't render on Windows) ============ */
 .flag-ch {
   display: inline-block;
