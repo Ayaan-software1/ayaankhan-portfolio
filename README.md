@@ -13,8 +13,8 @@ python -m http.server 8000
 ## Notes
 
 - The contact form posts to Formspree (form ID already configured in `index.html`).
-- The site ships with `<meta name="robots" content="noindex, nofollow">` — remove it
-  if you ever want search engines to index the site.
+- The site is indexable (`<meta name="robots" content="index, follow">`); robots.txt
+  is permissive too.
 
 ## Deploy to GitHub Pages (custom domain ayaankhan.dev)
 

@@ -65,6 +65,6 @@ Unfocused/automated Chrome windows throttle `requestAnimationFrame` to ~1fps —
 
 When extension-based screenshots fail (frozen renderer), `chrome.exe --headless=new --screenshot=... --window-size=1280,720 --virtual-time-budget=8000 <url>` is a reliable fallback for static captures. Note the hero is `min-height: 100svh`, so tall-window full-page shots show mostly hero; screenshot a minimal test page that links `css/style.css` to inspect a deeper section in isolation.
 
-## Known open items
+## SEO state
 
-- `index.html` has `<meta name="robots" content="noindex, nofollow">`, which deliberately keeps the site out of search results (robots.txt itself is permissive). Don't remove the meta tag unless the owner asks to make the site indexable.
+The site is deliberately indexable: `index.html` carries `<meta name="robots" content="index, follow">` (the owner flipped it from `noindex` on 2026-07-12) and robots.txt is permissive. Don't reintroduce `noindex` unless the owner asks.
