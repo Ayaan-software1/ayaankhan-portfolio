@@ -3,15 +3,18 @@
    Renders the heading onto an offscreen canvas, samples its
    pixels into a field of dots, and lets the cursor scatter
    nearby dots, which spring back home when it moves away.
-   Fine pointers without reduced-motion only — touch devices
-   keep the plain static <h1>.
+   Desktop-class devices without reduced-motion only — phones
+   and tablets keep the plain static <h1>.
    ============================================================ */
 (() => {
   "use strict";
 
-  const finePointer = window.matchMedia("(pointer: fine)").matches;
+  // Chrome on Windows touchscreen laptops reports `pointer: coarse` even
+  // with a touchpad, so a non-mobile browser (UA-CH) also counts.
+  const desktopClass = window.matchMedia("(pointer: fine)").matches ||
+    (navigator.userAgentData && navigator.userAgentData.mobile === false);
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-  if (!finePointer || reducedMotion) return;
+  if (!desktopClass || reducedMotion) return;
 
   const heading = document.querySelector(".hero__name");
   if (!heading) return;

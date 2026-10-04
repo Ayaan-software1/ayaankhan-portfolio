@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs><clipPath id="c"><rect x="0" y="14" width="64" height="36"/></clipPath></defs>
   <rect width="64" height="64" rx="14" fill="#0b0b0e"/>
-  <text x="32" y="43" font-family="'Space Grotesk', 'Segoe UI', system-ui, sans-serif" font-size="30" font-weight="700" fill="#e9e9ec" text-anchor="middle">A</text>
-  <circle cx="46" cy="41" r="4" fill="#ffffff"/>
+  <path clip-path="url(#c)" d="M15 50 L31 14 L31 50 M20.8 37 H31 L49 14 M38.2 27.8 L49 50" fill="none" stroke="#e9e9ec" stroke-width="5.5" stroke-linejoin="miter" stroke-miterlimit="10"/>
 </svg>

@@ -5,16 +5,28 @@
 (() => {
   "use strict";
 
-  const finePointer = window.matchMedia("(pointer: fine)").matches;
+  // Chrome on Windows touchscreen laptops reports `pointer: coarse` even
+  // with a touchpad, so a non-mobile browser (UA-CH) also counts.
+  const desktopClass = window.matchMedia("(pointer: fine)").matches ||
+    (navigator.userAgentData && navigator.userAgentData.mobile === false);
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   /* ---------- Custom cursor (pointer devices only) ---------- */
-  if (finePointer && !reducedMotion) {
+  if (desktopClass && !reducedMotion) {
+    // Viewfinder cursor: an instant dot plus four corner brackets. The
+    // brackets trail the pointer as a small square, and over anything
+    // interactive they glide out and lock onto that element's edges.
     const dot = document.getElementById("cursor-dot");
-    const ring = document.getElementById("cursor-ring");
+    const frame = document.getElementById("cursor-frame");
+
+    const IDLE = 26;   // bracket square around the pointer (px)
+    const PAD = 8;     // breathing room around a locked element (px)
+    const lockTargets = "a, button, summary, .magnetic-card, .tooltip, input, textarea";
 
     let mouseX = -100, mouseY = -100;
-    let ringX = -100, ringY = -100;
+    const box = { x: -100, y: -100, w: IDLE, h: IDLE };  // frame centre + size
+    let locked = null;
+    let pressed = false;
 
     // Only hide the native cursor once we know where the real one is
     window.addEventListener("mousemove", () => {
@@ -28,25 +40,42 @@
       dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
     }, { passive: true });
 
-    // Ring trails behind with a soft lerp (~180ms to catch up).
+    document.addEventListener("mouseover", (e) => {
+      locked = e.target.closest(lockTargets);
+      frame.classList.toggle("is-locked", !!locked);
+      dot.classList.toggle("is-locked", !!locked);
+    });
+    window.addEventListener("mousedown", () => { pressed = true; });
+    window.addEventListener("mouseup", () => { pressed = false; });
+
+    // Frame eases toward the pointer square, or the locked element's rect
+    // (re-read every frame, so it follows magnetic pulls and scrolling).
     // Time-based smoothing so the feel doesn't change with frame rate.
     let lastTrail = performance.now();
     (function trail(now) {
       const dt = Math.min((now - lastTrail) / 1000, 0.1) || 0.016;
       lastTrail = now;
-      const k = 1 - Math.exp(-dt / 0.06);
-      ringX += (mouseX - ringX) * k;
-      ringY += (mouseY - ringY) * k;
-      ring.style.transform = `translate(${ringX}px, ${ringY}px) translate(-50%, -50%)`;
+
+      let tx = mouseX, ty = mouseY, tw = IDLE, th = IDLE;
+      if (locked && locked.isConnected) {
+        const r = locked.getBoundingClientRect();
+        tx = r.left + r.width / 2;
+        ty = r.top + r.height / 2;
+        tw = r.width + PAD * 2;
+        th = r.height + PAD * 2;
+      }
+      if (pressed) { tw *= 0.88; th *= 0.88; }
+
+      const k = 1 - Math.exp(-dt / (locked ? 0.08 : 0.06));
+      box.x += (tx - box.x) * k;
+      box.y += (ty - box.y) * k;
+      box.w += (tw - box.w) * k;
+      box.h += (th - box.h) * k;
+      frame.style.width = `${box.w}px`;
+      frame.style.height = `${box.h}px`;
+      frame.style.transform = `translate(${box.x - box.w / 2}px, ${box.y - box.h / 2}px)`;
       requestAnimationFrame(trail);
     })(lastTrail);
-
-    // Grow the ring over interactive elements
-    const hoverTargets = "a, button, .magnetic-card, .tooltip";
-    document.querySelectorAll(hoverTargets).forEach((el) => {
-      el.addEventListener("mouseenter", () => ring.classList.add("is-hovering"));
-      el.addEventListener("mouseleave", () => ring.classList.remove("is-hovering"));
-    });
 
     /* ---------- Magnetic pull ---------- */
     const attachMagnet = (el, strength) => {
@@ -139,6 +168,12 @@
     });
   });
 
+  /* ---------- Links to #legal open the footer's Legal & Privacy ---------- */
+  const legal = document.getElementById("legal");
+  document.querySelectorAll('a[href="#legal"]').forEach((link) => {
+    link.addEventListener("click", () => { if (legal) legal.open = true; });
+  });
+
   /* ---------- Contact form (Formspree, AJAX) ---------- */
   const form = document.getElementById("contact-form");
   const status = document.getElementById("form-status");
@@ -161,7 +196,7 @@
           throw new Error("Formspree rejected the request");
         }
       } catch {
-        status.textContent = "Hmm, that didn't work — email me directly instead.";
+        status.textContent = "Hmm, that didn't work. Email me directly instead.";
         status.classList.add("is-error");
       }
     });
@@ -177,7 +212,7 @@
     "font-size: 13px; color: #9a9aa3; line-height: 1.6;"
   );
   console.log(
-    "%c(Psst — try hovering the 🇨🇭 in the hero.)",
+    "%c(Psst, try hovering the 🇨🇭 in the hero.)",
     "font-size: 11px; color: #55555e; font-style: italic;"
   );
 })();

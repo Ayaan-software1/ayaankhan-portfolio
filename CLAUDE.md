@@ -22,13 +22,14 @@ Deployed via GitHub Pages from `main` / root, with the custom domain in `CNAME`.
 - `js/main.js` — one IIFE: custom cursor + magnetic hover, scroll reveals (see below), project accordions, AJAX Formspree submission.
 - `js/hero-text.js` — particle text for the hero name (see below).
 - `js/hero3d.js` — the 3D rings object and its scroll-driven journey (see below). Dynamically imports Three.js as an ES module only on desktop-class devices; otherwise adds `no-3d` to `<body>`, which shows a CSS gradient fallback instead.
+- `js/ascii-bg.js` — full-page WebGL ASCII-glyph noise field behind everything (`#ascii-bg`, `z-index: -2`); swells and ripples around the cursor, drifts with scroll. Raw WebGL, self-contained, same motion gates.
 - `css/style.css` — dark monochrome theme, custom cursor, tooltips, reveal/accordion styles.
 - `img/` — 16:9 project thumbnails (real screenshots of each project).
 
 Conventions that span files:
 
 - **Monochrome palette**: strictly black/white/grey — `--accent` is light grey, not a color. Deliberate exceptions: the red Swiss-flag SVGs (national flag, content not accent), the Devicon skill logos (brand colors), and project thumbnails — which are held to the palette by a `grayscale(1)` filter at rest that releases to full color on card hover. Don't introduce color accents.
-- **Motion gates**: every effect is gated behind `(pointer: fine)` and `prefers-reduced-motion`; the 3D additionally requires `innerWidth >= 768` at load. Keep new effects behind the same gates.
+- **Motion gates**: every effect (custom cursor, particle text, 3D, ASCII field) is gated behind a "desktop-class" check — `(pointer: fine)` **or** `navigator.userAgentData.mobile === false` — plus no `prefers-reduced-motion`; the 3D additionally requires `innerWidth >= 768` at load. Keep new effects behind the same gates. The UA-CH half exists because Chrome on Windows touchscreen laptops reports `pointer: coarse` and `any-pointer: fine` = false even with a touchpad, which hid every effect on the owner's own laptop. Don't narrow it back to `(pointer: fine)` alone.
 - **Behavior classes**: `.magnetic` / `.magnetic-card` opt into magnetic hover, `.reveal` into scroll-triggered fade-in, `.tooltip` + `data-tip` renders a CSS tooltip.
 - Script order in `index.html` matters: GSAP + ScrollTrigger CDN scripts, then `main.js`, then `hero-text.js`, then `hero3d.js` (hero3d assumes GSAP globals exist; hero-text is self-contained).
 

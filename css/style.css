@@ -35,45 +35,54 @@ img { max-width: 100%; display: block; }
 
 a { color: inherit; text-decoration: none; }
 
-/* Custom cursor active: hide native cursor (JS adds this class on fine pointers only) */
+/* Custom cursor active: hide native cursor (JS adds this class on desktop-class
+   devices only — don't add a (pointer: coarse) rule hiding the dot/frame: Windows
+   touchscreen laptops match it and would end up with no cursor at all) */
 body.has-cursor, body.has-cursor a, body.has-cursor button,
-body.has-cursor input, body.has-cursor textarea, body.has-cursor label {
+body.has-cursor input, body.has-cursor textarea, body.has-cursor label,
+body.has-cursor summary {
   cursor: none;
 }
 
-/* ============ Custom cursor ============ */
-.cursor-dot, .cursor-ring {
+/* ============ Custom cursor: viewfinder ============
+   Dot + four corner brackets. main.js sizes/moves the frame every
+   frame; over interactive elements it locks onto their edges.
+   `difference` blending keeps both visible over light surfaces. */
+.cursor-dot, .cursor-frame {
   position: fixed;
   top: 0; left: 0;
   pointer-events: none;
-  border-radius: 50%;
   z-index: 9999;
   opacity: 0;
+  mix-blend-mode: difference;
+  transition: opacity 0.2s ease;
+}
+body.has-cursor .cursor-dot, body.has-cursor .cursor-frame { opacity: 1; }
+
+.cursor-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #fff;
   /* Parked off-screen until the first mousemove */
   transform: translate(-100px, -100px) translate(-50%, -50%);
 }
-body.has-cursor .cursor-dot, body.has-cursor .cursor-ring { opacity: 1; }
+body.has-cursor .cursor-dot.is-locked { opacity: 0.5; }
 
-.cursor-dot {
+.cursor-frame {
+  width: 26px; height: 26px;
+  transform: translate(-100px, -100px);
+}
+.cursor-frame i {
+  position: absolute;
   width: 7px; height: 7px;
-  background: #fff;
+  border: 0 solid rgba(255, 255, 255, 0.7);
+  transition: width 0.3s ease, height 0.3s ease, border-color 0.3s ease;
 }
-
-.cursor-ring {
-  width: 34px; height: 34px;
-  border: 1.5px solid rgba(255, 255, 255, 0.35);
-  transition: width 0.25s ease, height 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
-}
-
-.cursor-ring.is-hovering {
-  width: 52px; height: 52px;
-  border-color: rgba(255, 255, 255, 0.85);
-  background: rgba(255, 255, 255, 0.08);
-}
-
-@media (pointer: coarse) {
-  .cursor-dot, .cursor-ring { display: none; }
-}
+.cursor-frame i:nth-child(1) { top: 0; left: 0; border-top-width: 1.5px; border-left-width: 1.5px; }
+.cursor-frame i:nth-child(2) { top: 0; right: 0; border-top-width: 1.5px; border-right-width: 1.5px; }
+.cursor-frame i:nth-child(3) { bottom: 0; left: 0; border-bottom-width: 1.5px; border-left-width: 1.5px; }
+.cursor-frame i:nth-child(4) { bottom: 0; right: 0; border-bottom-width: 1.5px; border-right-width: 1.5px; }
+.cursor-frame.is-locked i { width: 12px; height: 12px; border-color: #fff; }
 
 /* ============ Nav ============ */
 .nav {
@@ -90,12 +99,15 @@ body.has-cursor .cursor-dot, body.has-cursor .cursor-ring { opacity: 1; }
 }
 
 .nav__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
   font-family: var(--font-head);
-  font-weight: 700;
-  font-size: 1.3rem;
-  letter-spacing: 0.02em;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.01em;
 }
-.nav__logo-dot { color: var(--accent); }
+.nav__mark { width: 2rem; height: 2rem; flex-shrink: 0; }
 
 .nav__links {
   display: flex;
@@ -118,6 +130,18 @@ body.has-cursor .cursor-dot, body.has-cursor .cursor-ring { opacity: 1; }
   align-items: center;
   padding: 0 clamp(1.25rem, 6vw, 5rem);
   overflow: hidden;
+}
+
+/* Full-page ASCII field (see ascii-bg.js). z-index -2 sits it under the
+   3D rings and all content. */
+#ascii-bg {
+  position: fixed;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -2;
 }
 
 /* Fixed overlay: GSAP drives it down the page on scroll (see hero3d.js).
@@ -299,6 +323,15 @@ body.no-3d .hero__glow { display: block; }
   margin-bottom: 1.4rem;
 }
 .about__text strong { color: var(--text); font-weight: 600; }
+.about__link {
+  color: var(--text);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.3);
+  text-underline-offset: 0.2em;
+  transition: text-decoration-color 0.25s ease;
+}
+.about__link:hover { text-decoration-color: var(--text); }
 
 .about__facts {
   list-style: none;
@@ -570,6 +603,33 @@ body.no-3d .hero__glow { display: block; }
 }
 .contact__form input::placeholder,
 .contact__form textarea::placeholder { color: rgba(154, 154, 163, 0.5); }
+
+/* Consent checkbox: overrides the stacked uppercase label/input styles above */
+.contact__form .contact__consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  cursor: pointer;
+}
+.contact__form .contact__consent input {
+  flex-shrink: 0;
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-top: 0.2rem;
+  padding: 0;
+  accent-color: var(--text);
+}
+.contact__form .contact__consent span {
+  font-size: 0.85rem;
+  letter-spacing: normal;
+  text-transform: none;
+  line-height: 1.55;
+}
+.contact__legal-link {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
 
 .contact__form .btn { justify-self: start; }
 
