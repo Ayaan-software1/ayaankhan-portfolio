@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<!--
+  Source for ../og-image.png (the link-preview image, 1200x630).
+  Regenerate after editing:
+    chrome --headless=new --hide-scrollbars --window-size=1200,630
+           --virtual-time-budget=5000 --screenshot=og-image.png og/template.html
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex">
+<title>OG image template</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@500;700&display=block" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; background: #000; }
+  body {
+    position: relative;
+    color: #f2f2f4;
+    font-family: "Inter", sans-serif;
+    /* Soft light behind the mark, fading into pure black */
+    background:
+      radial-gradient(circle at 270px 315px, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02) 260px, transparent 420px),
+      #000;
+  }
+
+  .mark {
+    position: absolute;
+    left: 70px; top: 115px;
+    width: 400px; height: 400px;
+    filter: drop-shadow(0 0 28px rgba(255, 255, 255, 0.22));
+  }
+
+  .divider {
+    position: absolute;
+    left: 548px; top: 150px; bottom: 150px;
+    width: 1px;
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.35), transparent);
+  }
+
+  .copy {
+    position: absolute;
+    left: 610px; top: 0; bottom: 0;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .kicker {
+    font-family: "Space Grotesk", sans-serif; font-weight: 500;
+    font-size: 21px; letter-spacing: 0.32em; text-transform: uppercase;
+    color: #8a8a93;
+    margin-bottom: 26px;
+  }
+  .roles {
+    font-family: "Space Grotesk", sans-serif; font-weight: 700;
+    font-size: 86px; line-height: 1.02; letter-spacing: -0.035em;
+    list-style: none;
+  }
+  .roles li:last-child { color: #4a4a52; }
+
+  .url {
+    position: absolute; left: 610px; bottom: 58px;
+    font-family: "Space Grotesk", sans-serif; font-weight: 500;
+    font-size: 21px; letter-spacing: 0.08em; color: #c9c9cf;
+    display: flex; align-items: center; gap: 14px;
+  }
+  .url::before { content: ""; width: 34px; height: 1.5px; background: #c9c9cf; }
+</style>
+</head>
+<body>
+  <!-- AK ligature (same geometry as favicon.svg and the nav logo) -->
+  <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
+    <defs><clipPath id="c"><rect x="0" y="14" width="64" height="36"/></clipPath></defs>
+    <path clip-path="url(#c)" d="M15 50 L31 14 L31 50 M20.8 37 H31 L49 14 M38.2 27.8 L49 50" fill="none" stroke="#f2f2f4" stroke-width="5.5" stroke-linejoin="miter" stroke-miterlimit="10"/>
+  </svg>
+
+  <div class="divider"></div>
+
+  <div class="copy">
+    <p class="kicker">Ayaan Khan · Zurich</p>
+    <ul class="roles">
+      <li>Co-founder.</li>
+      <li>Developer.</li>
+      <li>@ Google.</li>
+    </ul>
+  </div>
+
+  <p class="url">ayaankhan.dev</p>
+</body>
+</html>
