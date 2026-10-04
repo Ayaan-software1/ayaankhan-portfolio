@@ -1,88 +1,80 @@
 <!DOCTYPE html>
 <!--
   Source for ../og-image.png (the link-preview image, 1200x630).
+  Everything important sits in the centre 630x630 square: WhatsApp Desktop
+  and some other apps show only a centre-cropped square thumbnail.
   Regenerate after editing:
     chrome --headless=new --hide-scrollbars --window-size=1200,630
            --virtual-time-budget=5000 --screenshot=og-image.png og/template.html
+  Then bump the ?v= on og:image/twitter:image in index.html so apps refetch it.
 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="robots" content="noindex">
 <title>OG image template</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Space+Grotesk:wght@500;700&display=block" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&display=block" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { width: 1200px; height: 630px; overflow: hidden; background: #000; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
   body {
     position: relative;
     color: #f2f2f4;
-    font-family: "Inter", sans-serif;
+    font-family: "Space Grotesk", sans-serif;
     /* Soft light behind the mark, fading into pure black */
     background:
-      radial-gradient(circle at 270px 315px, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.02) 260px, transparent 420px),
+      radial-gradient(circle at 600px 270px, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.025) 250px, transparent 430px),
       #000;
+    display: flex; flex-direction: column; align-items: center;
+  }
+
+  .kicker {
+    margin-top: 62px;
+    font-weight: 500; font-size: 22px;
+    letter-spacing: 0.34em; text-transform: uppercase;
+    color: #8a8a93;
+    padding-left: 0.34em; /* optically centre the letter-spaced line */
   }
 
   .mark {
-    position: absolute;
-    left: 70px; top: 115px;
-    width: 400px; height: 400px;
-    filter: drop-shadow(0 0 28px rgba(255, 255, 255, 0.22));
+    width: 330px; height: 330px;
+    margin-top: 8px;
+    filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.25));
   }
 
-  .divider {
-    position: absolute;
-    left: 548px; top: 150px; bottom: 150px;
-    width: 1px;
-    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.35), transparent);
-  }
-
-  .copy {
-    position: absolute;
-    left: 610px; top: 0; bottom: 0;
-    display: flex; flex-direction: column; justify-content: center;
-  }
-  .kicker {
-    font-family: "Space Grotesk", sans-serif; font-weight: 500;
-    font-size: 21px; letter-spacing: 0.32em; text-transform: uppercase;
-    color: #8a8a93;
-    margin-bottom: 26px;
-  }
   .roles {
-    font-family: "Space Grotesk", sans-serif; font-weight: 700;
-    font-size: 86px; line-height: 1.02; letter-spacing: -0.035em;
-    list-style: none;
+    margin-top: -6px;
+    font-weight: 700; font-size: 40px; letter-spacing: -0.02em;
+    white-space: nowrap;
   }
-  .roles li:last-child { color: #4a4a52; }
+  .roles .dim { color: #55555e; }
 
   .url {
-    position: absolute; left: 610px; bottom: 58px;
-    font-family: "Space Grotesk", sans-serif; font-weight: 500;
-    font-size: 21px; letter-spacing: 0.08em; color: #c9c9cf;
-    display: flex; align-items: center; gap: 14px;
+    position: absolute; bottom: 40px;
+    font-weight: 500; font-size: 20px; letter-spacing: 0.1em;
+    color: #9a9aa3;
   }
-  .url::before { content: ""; width: 34px; height: 1.5px; background: #c9c9cf; }
+
+  /* Wide-card framing: thin rules that fade toward the centre */
+  .rule { position: absolute; top: 315px; width: 200px; height: 1px; }
+  .rule--l { left: 60px;  background: linear-gradient(to right, transparent, rgba(255,255,255,0.3)); }
+  .rule--r { right: 60px; background: linear-gradient(to left,  transparent, rgba(255,255,255,0.3)); }
 </style>
 </head>
 <body>
+  <p class="kicker">Ayaan Khan · Zurich</p>
+
   <!-- AK ligature (same geometry as favicon.svg and the nav logo) -->
   <svg class="mark" viewBox="0 0 64 64" aria-hidden="true">
     <defs><clipPath id="c"><rect x="0" y="14" width="64" height="36"/></clipPath></defs>
     <path clip-path="url(#c)" d="M15 50 L31 14 L31 50 M20.8 37 H31 L49 14 M38.2 27.8 L49 50" fill="none" stroke="#f2f2f4" stroke-width="5.5" stroke-linejoin="miter" stroke-miterlimit="10"/>
   </svg>
 
-  <div class="divider"></div>
-
-  <div class="copy">
-    <p class="kicker">Ayaan Khan · Zurich</p>
-    <ul class="roles">
-      <li>Co-founder.</li>
-      <li>Developer.</li>
-      <li>@ Google.</li>
-    </ul>
-  </div>
+  <p class="roles">Co-founder. Developer. <span class="dim">@ Google.</span></p>
 
   <p class="url">ayaankhan.dev</p>
+
+  <div class="rule rule--l"></div>
+  <div class="rule rule--r"></div>
 </body>
 </html>
