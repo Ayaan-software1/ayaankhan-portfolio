@@ -25,6 +25,7 @@ Deployed via GitHub Pages from `main` / root, with the custom domain in `CNAME`.
 - `js/ascii-bg.js` — full-page WebGL ASCII-glyph noise field behind everything (`#ascii-bg`, `z-index: -2`); swells and ripples around the cursor, drifts with scroll. Raw WebGL, self-contained, same motion gates.
 - `css/style.css` — dark monochrome theme, custom cursor, tooltips, reveal/accordion styles.
 - `img/` — 16:9 project thumbnails (real screenshots of each project).
+- `og-image.png` — 1200×630 link-preview image referenced by the `og:`/`twitter:` meta tags (absolute URLs). It's a headless-Chrome screenshot of `og/template.html`; edit the template and regenerate with the command in its header comment rather than editing the PNG.
 
 Conventions that span files:
 
