@@ -5,18 +5,22 @@
    right → Projects left), it pulses as each section becomes
    active, then fades out when Skills enters — at which point
    the Three.js render loop is stopped entirely.
-   Loaded only on desktop-class devices with fine pointers and
-   no reduced-motion preference; everyone else gets a gradient.
+   Loaded only on desktop-class devices (fine pointer, or a non-mobile
+   browser) with no reduced-motion preference; everyone else gets a
+   gradient.
    ============================================================ */
 (() => {
   "use strict";
 
   const canvas = document.getElementById("hero-canvas");
-  const finePointer = window.matchMedia("(pointer: fine)").matches;
+  // Chrome on Windows touchscreen laptops reports `pointer: coarse` even
+  // with a touchpad, so a non-mobile browser (UA-CH) also counts.
+  const desktopClass = window.matchMedia("(pointer: fine)").matches ||
+    (navigator.userAgentData && navigator.userAgentData.mobile === false);
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const wideEnough = window.innerWidth >= 768;
 
-  if (!canvas || !finePointer || reducedMotion || !wideEnough) {
+  if (!canvas || !desktopClass || reducedMotion || !wideEnough) {
     document.body.classList.add("no-3d");
     return;
   }
@@ -159,6 +163,9 @@
     let rendering = false;
     // 0..1, eased up and back down by GSAP on section pulses
     const pulseState = { v: 0 };
+    // 1 in the hero, eased down by the scroll path while the object
+    // travels behind section text, so it never fights the copy
+    const dimState = { v: 1 };
 
     function tick() {
       const dt = Math.min(clock.getDelta(), 0.05);
@@ -168,25 +175,27 @@
       if (!hasGSAP && window.scrollY > window.innerHeight) return;
 
       const boost = pulseState.v;
+      const dim = dimState.v;
 
       rings.forEach(({ mesh, pivot, base, axis, wobble, speed }) => {
         pivot.rotation[axis] += speed * dt;
         pivot.rotation[wobble] += speed * 0.22 * dt;
-        mesh.material.opacity = Math.min(1, base * (1 + boost));
+        mesh.material.opacity = Math.min(1, base * (1 + boost)) * dim;
       });
 
       dotRing.rotation.z += 0.14 * dt;
-      dotRing.material.opacity = Math.min(1, DOT_BASE_OPACITY * (1 + boost));
+      dotRing.material.opacity = Math.min(1, DOT_BASE_OPACITY * (1 + boost)) * dim;
       dust.rotation.y -= 0.02 * dt;
       dust.rotation.x += 0.008 * dt;
+      dust.material.opacity = 0.35 * dim;
 
       group.rotation.y += 0.04 * dt;
       group.position.y = Math.sin(t * 0.7) * 0.06;
       group.scale.setScalar(1 + boost * 0.07);
 
       const breath = 0.5 + Math.sin(t * 1.5) * 0.5;
-      core.material.opacity = Math.min(1, 0.6 + breath * 0.35 + boost * 0.3);
-      glow.material.opacity = Math.min(1, 0.55 + breath * 0.4 + boost * 0.4);
+      core.material.opacity = Math.min(1, 0.6 + breath * 0.35 + boost * 0.3) * dim;
+      glow.material.opacity = Math.min(1, 0.55 + breath * 0.4 + boost * 0.4) * dim;
       const gs = 0.85 + breath * 0.18 + boost * 0.15;
       glow.scale.set(gs, gs, 1);
 
@@ -235,6 +244,9 @@
       { sel: "#projects", xf: 0.1,  scale: 0.52, rotation: -6 },
     ];
     const exitEl = document.querySelector("#skills");
+    // Brightness once the object leaves the hero and passes behind text
+    // (1 = as bright as in the hero). Users found it distracting at full.
+    const TRAVEL_DIM = 0.3;
 
     // Centripetal-ish Catmull-Rom through {t, v} points: continuous
     // position AND velocity, so the weave never corners at a waypoint
@@ -279,13 +291,13 @@
         return t;
       };
 
-      const pts = [{ t: 0, x: baseCenter / vw, s: 1, r: 0 }];
+      const pts = [{ t: 0, x: baseCenter / vw, s: 1, r: 0, o: 1 }];
       waypoints.forEach((w) => {
         const el = document.querySelector(w.sel);
         if (!el) return;
-        pts.push({ t: tOf(el), x: w.xf, s: w.scale, r: w.rotation });
+        pts.push({ t: tOf(el), x: w.xf, s: w.scale, r: w.rotation, o: TRAVEL_DIM });
       });
-      pts.push({ t: 1, x: 0.42, s: 0.45, r: 0 });
+      pts.push({ t: 1, x: 0.42, s: 0.45, r: 0, o: TRAVEL_DIM });
 
       const setX = gsap.quickSetter(canvas, "x", "px");
       const setScale = gsap.quickSetter(canvas, "scale");
@@ -293,6 +305,7 @@
       const xPts = pts.map((p) => ({ t: p.t, v: p.x }));
       const sPts = pts.map((p) => ({ t: p.t, v: p.s }));
       const rPts = pts.map((p) => ({ t: p.t, v: p.r }));
+      const oPts = pts.map((p) => ({ t: p.t, v: p.o }));
 
       const state = { p: 0 };
       pathTween = gsap.to(state, {
@@ -308,6 +321,7 @@
           setX(spline(xPts, state.p) * vw - baseCenter);
           setScale(spline(sPts, state.p));
           setRotation(spline(rPts, state.p));
+          dimState.v = Math.min(Math.max(spline(oPts, state.p), 0), 1);
         },
       });
     }

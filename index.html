@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index, follow">
-  <meta name="description" content="Ayaan Khan — Applikationsentwickler in the making, Zurich.">
-  <title>Ayaan Khan — Portfolio</title>
+  <meta name="description" content="Ayaan Khan, Applikationsentwickler in the making from Zurich.">
+  <title>Ayaan Khan · Portfolio</title>
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,10 +16,17 @@
 
   <!-- Custom cursor (pointer-only, activated via JS) -->
   <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
-  <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
+  <div class="cursor-frame" id="cursor-frame" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 
   <header class="nav">
-    <a href="#top" class="nav__logo magnetic">AK<span class="nav__logo-dot">.</span></a>
+    <a href="#top" class="nav__logo magnetic" aria-label="Ayaan Khan, back to top">
+      <!-- AK ligature: A and K share one stem; the A's crossbar runs into the K's arm -->
+      <svg class="nav__mark" viewBox="0 0 64 64" aria-hidden="true">
+        <defs><clipPath id="nav-mark-clip"><rect x="0" y="14" width="64" height="36"/></clipPath></defs>
+        <path clip-path="url(#nav-mark-clip)" d="M15 50 L31 14 L31 50 M20.8 37 H31 L49 14 M38.2 27.8 L49 50" fill="none" stroke="currentColor" stroke-width="5.5" stroke-linejoin="miter" stroke-miterlimit="10"/>
+      </svg>
+      <span class="nav__name">Ayaan Khan</span>
+    </a>
     <nav class="nav__links" aria-label="Main navigation">
       <a href="#about" class="magnetic">About</a>
       <a href="#timeline" class="magnetic">Timeline</a>
@@ -59,15 +66,21 @@
         <div class="about__grid">
           <div class="about__text">
             <p class="reveal">
-              Born in India, raised in Zurich since I was 9 — I switch between
+              Born in India, raised in Zurich since I was 9. I switch between
               <strong>German, Swiss German, English, and Hindi/Urdu</strong>
               without thinking about it. Code's just the fifth language.
             </p>
             <p class="reveal">
               Currently finishing my Basisjahr at BBC, learning how to build
-              great things before the real one starts — a Software Engineering
-              apprenticeship (<strong>Applikationsentwickler EFZ</strong>) at
-              <strong>Google</strong>.
+              great things before the real one starts. Next up is a Software
+              Engineering apprenticeship (<strong>Applikationsentwickler EFZ</strong>)
+              at <strong>Google</strong>.
+            </p>
+            <p class="reveal">
+              On the side, I'm co-founder of
+              <a class="about__link" href="https://avtoris.studio" target="_blank" rel="noopener noreferrer">Avtoris</a>.
+              We help small businesses build their digital infrastructure,
+              starting with a website that actually works for them.
             </p>
             <p class="reveal">
               Off the keyboard, you'll find me at John&nbsp;Reed lifting, or
@@ -80,6 +93,7 @@
             <li><span>Base</span>Zurich <svg class="flag-ch" viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="6" fill="#da291c"/><rect x="13" y="6.5" width="6" height="19" fill="#fff"/><rect x="6.5" y="13" width="19" height="6" fill="#fff"/></svg></li>
             <li><span>Languages</span>DE · CH-DE · EN · HI/UR</li>
             <li><span>Now</span>Basisjahr @ BBC</li>
+            <li><span>Building</span><div><a class="about__link" href="https://avtoris.studio" target="_blank" rel="noopener noreferrer">Avtoris</a> · Co-founder</div></li>
             <li><span>Next</span>EFZ @ Google</li>
             </ul>
           </div>
@@ -96,6 +110,11 @@
             <div class="timeline__dot timeline__dot--done"></div>
             <p class="timeline__date">10.07.2026</p>
             <h3 class="timeline__title">Finished Sekundarstufe @ Schulhaus Halden</h3>
+          </li>
+          <li class="timeline__item reveal">
+            <div class="timeline__dot timeline__dot--now"></div>
+            <p class="timeline__date">Since 08.2026</p>
+            <h3 class="timeline__title">Co-founded <a class="about__link" href="https://avtoris.studio" target="_blank" rel="noopener noreferrer">Avtoris</a>, building websites for small businesses</h3>
           </li>
           <li class="timeline__item reveal">
             <div class="timeline__dot timeline__dot--now"></div>
@@ -122,7 +141,7 @@
             <button class="project__head" aria-expanded="false">
               <div>
                 <h3 class="project__title">Inside Glattbrugg</h3>
-                <p class="project__oneliner">A web deep-dive into the place I grew up — Glattbrugg, beyond the flight path.</p>
+                <p class="project__oneliner">A web deep-dive into Glattbrugg, the place I grew up. There's more to it than the flight path.</p>
               </div>
               <span class="project__chevron" aria-hidden="true">↓</span>
             </button>
@@ -145,7 +164,7 @@
             </button>
             <div class="project__body">
               <div class="project__body-inner">
-                <p>Enter your weekly screen time and it tells you what that adds up to over a year — in books unread, runs not run and hours of sleep lost. A small tool with a big guilt trip, built in vanilla JS.</p>
+                <p>Enter your weekly screen time and it tells you what that adds up to over a year: books unread, runs not run and hours of sleep lost. A small tool with a big guilt trip, built in vanilla JS.</p>
                 <ul class="project__tags"><li>JavaScript</li><li>CSS</li></ul>
               </div>
             </div>
@@ -179,7 +198,7 @@
             </button>
             <div class="project__body">
               <div class="project__body-inner">
-                <p>Written in JavaScript with Scriptable. Fetches prayer times for Zurich, caches them for offline use, and highlights the next upcoming prayer with a countdown — glanceable right from the home screen.</p>
+                <p>Written in JavaScript with Scriptable. Fetches prayer times for Zurich, caches them for offline use, and highlights the next prayer with a countdown, so you see it at a glance right on your home screen.</p>
                 <ul class="project__tags"><li>Scriptable</li><li>JavaScript</li><li>iOS</li></ul>
               </div>
             </div>
@@ -219,6 +238,14 @@
             <img class="skill__icon--invert" src="https://cdn.jsdelivr.net/gh/devicons/devicon@v2.16.0/icons/github/github-original.svg" alt="" width="44" height="44" loading="lazy">
             <span>GitHub</span>
           </li>
+          <li class="skill reveal magnetic-card">
+            <img class="skill__icon--invert" src="https://cdn.jsdelivr.net/npm/simple-icons@16.34.0/icons/claude.svg" alt="" width="44" height="44" loading="lazy">
+            <span>Claude</span>
+          </li>
+          <li class="skill reveal magnetic-card">
+            <img class="skill__icon--invert" src="https://cdn.jsdelivr.net/npm/simple-icons@16.34.0/icons/claudecode.svg" alt="" width="44" height="44" loading="lazy">
+            <span>Claude Code</span>
+          </li>
         </ul>
       </div>
     </section>
@@ -229,7 +256,7 @@
         <h2 class="section__title reveal"><span class="section__num">05</span>Contact</h2>
         <div class="contact__grid">
           <div class="contact__info">
-            <p class="reveal contact__lead">Got a project or a question? My inbox is open — or hit me up if you want to go for a run some weekend.</p>
+            <p class="reveal contact__lead">Got a project or a question? My inbox is open. Or hit me up if you want to go for a run some weekend.</p>
             <a class="contact__link reveal magnetic" href="mailto:ayaan.zurich@gmail.com">
               <span class="contact__link-label">Email</span>
               ayaan.zurich@gmail.com
@@ -237,6 +264,10 @@
             <a class="contact__link reveal magnetic" href="https://github.com/ayaan-software1" target="_blank" rel="noopener noreferrer">
               <span class="contact__link-label">GitHub</span>
               github.com/ayaan-software1
+            </a>
+            <a class="contact__link reveal magnetic" href="https://avtoris.studio" target="_blank" rel="noopener noreferrer">
+              <span class="contact__link-label">Avtoris</span>
+              avtoris.studio
             </a>
           </div>
           <form class="contact__form reveal" id="contact-form" action="https://formspree.io/f/xdaqnegw" method="POST">
@@ -252,6 +283,13 @@
               <span>Message</span>
               <textarea name="message" rows="5" required placeholder="Grüezi Ayaan, …"></textarea>
             </label>
+            <!-- Formspree isn't Swiss-U.S. DPF certified, so the US transfer rests on
+                 explicit consent (Art. 17 para. 1 lit. a FADP). Don't remove. -->
+            <label class="contact__consent">
+              <input type="checkbox" name="consent" value="yes" required>
+              <span>I agree that my message is sent via Formspree (USA) to reach Ayaan.
+                Details in <a href="#legal" class="contact__legal-link">Legal &amp; Privacy</a>.</span>
+            </label>
             <button type="submit" class="btn btn--primary magnetic">Send message</button>
             <p class="contact__status" id="form-status" role="status"></p>
           </form>
@@ -262,21 +300,27 @@
   </main>
 
   <footer class="footer">
-    <p>Made with <span class="tooltip" data-tip="…and a lot of coffee ☕">♥</span> in Zürich — © 2026 Ayaan Khan</p>
-    <details class="legal">
+    <p>Made with <span class="tooltip" data-tip="…and a lot of coffee ☕">♥</span> in Zürich · © 2026 Ayaan Khan</p>
+    <details class="legal" id="legal">
       <summary>Legal &amp; Privacy</summary>
       <div class="legal__body">
         <p><strong>Responsible for this site</strong><br>
         Ayaan Khan, Zurich, Switzerland<br>
         <a href="mailto:ayaan.zurich@gmail.com" class="magnetic">ayaan.zurich@gmail.com</a></p>
         <p><strong>Privacy</strong><br>
-        This site sets no cookies, local storage, or trackers of any kind, and uses no analytics.
-        It's hosted on GitHub Pages (GitHub, Inc., US) and loads fonts from the Google Fonts CDN
-        and scripts from the jsDelivr CDN — each may log your IP address abroad as part of normal
-        delivery. The contact form is processed by
+        This site sets no cookies, local storage, or trackers of any kind, and uses no analytics,
+        which is why there's no cookie banner. It's hosted on GitHub Pages (GitHub, Inc., US) and
+        loads fonts from Google Fonts (Google LLC, US) and scripts and icons from the jsDelivr CDN;
+        these providers may log your IP address abroad as part of normal delivery. GitHub and
+        Google are certified under the Swiss-U.S. Data Privacy Framework, which the Federal Council
+        recognises as providing adequate protection.</p>
+        <p><strong>Contact form</strong><br>
+        The name, email address and message you enter are sent to
         <a href="https://formspree.io/legal/privacy-policy/" class="magnetic">Formspree, Inc. (US)</a>
-        solely to deliver your message. In each case this means your data may be transferred
-        outside Switzerland, including to the US.</p>
+        solely to deliver your message to me. Formspree is not certified under the Swiss-U.S. Data
+        Privacy Framework, so this transfer to the US is based on your explicit consent
+        (Art. 17 para. 1 lit. a FADP), which you give with the checkbox in the form. If you'd rather
+        not, simply email me directly instead.</p>
         <p><strong>Your rights</strong><br>
         Under the Swiss Federal Act on Data Protection (FADP), you can request access to,
         correction of, or deletion of any data concerning you by contacting the address above, and
@@ -291,6 +335,7 @@
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
   <script src="js/main.js"></script>
   <script src="js/hero-text.js"></script>
+  <script src="js/ascii-bg.js"></script>
   <!-- Three.js is dynamically imported inside hero3d.js on capable devices only -->
   <script src="js/hero3d.js"></script>
 </body>
