@@ -89,9 +89,9 @@
       );
       float f = fbm(p * 2.1 + 2.6 * r);
 
-      // Scroll drags the field and lifts its density.
+      // Scroll drags the field. (No density lift: further down the page it
+      // turned into a busy carpet behind the Skills and Contact text.)
       f += sin(p.y * 3.0 - uScroll * 6.2) * 0.10;
-      f += uScroll * 0.10;
 
       // Cursor swell plus ripples travelling out of it.
       float d = distance(cellCentre, uPointer) / uResolution.y;
@@ -198,10 +198,12 @@
   function frame() {
     pointer.x += (pointer.tx - pointer.x) * POINTER_EASE;
     pointer.y += (pointer.ty - pointer.y) * POINTER_EASE;
-    intensity += (INTENSITY - intensity) * 0.02;   // fade in on load
-
     const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
     const scroll = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+
+    // Fade in on load; calmer further down, where there's more text to read
+    const target = INTENSITY * (1 - 0.45 * scroll);
+    intensity += (target - intensity) * 0.02;
 
     gl.uniform2f(u.uPointer, pointer.x, pointer.y);
     gl.uniform1f(u.uScroll, scroll);

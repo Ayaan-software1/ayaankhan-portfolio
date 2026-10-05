@@ -206,6 +206,10 @@ body.no-3d .hero__glow { display: block; }
   user-select: none;
 }
 
+/* Long German words (Applikationsentwickler) hyphenate on narrow phones
+   instead of running off-screen; scoped to lang="de" so English doesn't. */
+[lang="de"] { hyphens: auto; -webkit-hyphens: auto; }
+
 .hero__line {
   font-size: clamp(1.05rem, 2.2vw, 1.3rem);
   color: var(--muted);
@@ -454,6 +458,10 @@ body.no-3d .hero__glow { display: block; }
 
 .project:hover { border-color: rgba(255, 255, 255, 0.3); background: rgba(255, 255, 255, 0.045); }
 .project:hover .project__thumb img { filter: grayscale(0); }
+/* Light-theme screenshots (e.g. the Gmail inbox) would glare on the dark
+   page, so they're also dimmed at rest; hover still shows them as-is. */
+.project__thumb--light img { filter: grayscale(1) brightness(0.4) contrast(1.2); }
+.project:hover .project__thumb--light img { filter: grayscale(0) brightness(1) contrast(1); }
 
 .project__head {
   width: 100%;
@@ -523,6 +531,10 @@ body.no-3d .hero__glow { display: block; }
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   gap: 1rem;
+}
+/* Fixed 4 columns on wide screens so 8 skills make two even rows */
+@media (min-width: 760px) {
+  .skills { grid-template-columns: repeat(4, 1fr); }
 }
 
 .skill {
