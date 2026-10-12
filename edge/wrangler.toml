@@ -1,0 +1,10 @@
+# Deploy: requires ayaankhan.dev to be a Cloudflare zone with the GitHub Pages
+# A records proxied (orange cloud). Then, from this folder: npx wrangler deploy
+name = "ayaankhan-agent-negotiation"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+workers_dev = false
+
+routes = [
+  { pattern = "ayaankhan.dev/*", zone_name = "ayaankhan.dev" },
+]
