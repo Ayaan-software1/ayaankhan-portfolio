@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<!--
+  GitHub Pages serves this for every missing path (with HTTP 404), so all URLs
+  are root-absolute. The Markdown 404 for agents lives in edge/worker.js —
+  keep the two in sync.
+-->
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Page not found · Ayaan Khan</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png?v=2">
+  <link rel="alternate" type="text/markdown" href="https://ayaankhan.dev/index.html.md">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+  <style>
+    .notfound { min-height: 100svh; display: grid; place-items: center; }
+    .notfound p { color: var(--muted); max-width: 36rem; margin-bottom: 1rem; }
+    .notfound a:not(.btn) { color: var(--text); text-decoration: underline; text-underline-offset: 0.2em; }
+    .notfound .hero__cta { margin-top: 2rem; display: flex; flex-wrap: wrap; gap: 0.8rem; }
+  </style>
+</head>
+<body>
+  <main class="section notfound">
+    <div class="section__inner">
+      <h1 class="section__title"><span class="section__num">404</span>Page not found</h1>
+      <p>There's no page at this address. This site is a single page, so everything lives on the homepage.</p>
+      <p>For AI agents: the profile is available as Markdown at
+        <a href="/index.html.md">ayaankhan.dev/index.html.md</a>, with guidance in
+        <a href="/llms.txt">ayaankhan.dev/llms.txt</a> and all URLs in
+        <a href="/sitemap.xml">ayaankhan.dev/sitemap.xml</a>.</p>
+      <div class="hero__cta">
+        <a href="/" class="btn btn--primary">Back to the homepage</a>
+        <a href="/#contact" class="btn btn--ghost">Get in touch</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>

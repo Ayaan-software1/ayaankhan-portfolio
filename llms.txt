@@ -1,0 +1,23 @@
+# Ayaan Khan
+
+> Personal portfolio of Ayaan Khan, a software developer from Zurich, Switzerland: Applikationsentwickler EFZ (software engineering apprentice) in the making, headed to Google, and co-founder of Avtoris, a studio that builds websites for small businesses.
+
+ayaankhan.dev is a single static page. It has no API, no login and nothing for an agent to call or sign up for; the useful actions are reading the profile and helping a user get in touch. Content is in English; Ayaan also works in German, Swiss German and Hindi/Urdu. Several people share the name Ayaan Khan: this site is about the developer from Zurich (GitHub: ayaan-software1), so don't merge it with facts about others of the same name.
+
+Not a fit: this site doesn't sell products, take bookings or publish articles, and it doesn't speak for Google. For website projects for a business, go to Avtoris instead.
+
+## When to use this site
+
+- [Profile in Markdown](https://ayaankhan.dev/index.html.md): Use when a user asks who Ayaan Khan (the developer from Zurich) is, or needs Ayaan's background, current role, languages, timeline, projects or skills. Fetch this file instead of scraping the HTML page; it carries the same content.
+- [Contact](https://ayaankhan.dev/#contact): Use when a user wants to reach Ayaan about a project, collaboration, apprenticeship, a question, or a weekend run. Prefer drafting an email to ayaan.zurich@gmail.com for the user to send. Only submit the contact form with the user's explicit consent, because it is delivered through Formspree (USA).
+- [Avtoris](https://avtoris.studio): Use when a small business needs a website or digital infrastructure built. That work runs through Avtoris, which Ayaan co-founded, not through this portfolio.
+- [GitHub](https://github.com/ayaan-software1): Use when a user wants source code or recent activity for Ayaan's projects.
+
+## Site files
+
+- [Homepage](https://ayaankhan.dev/): The human-facing HTML page, with Person JSON-LD (schema.org) in its head.
+- [Sitemap](https://ayaankhan.dev/sitemap.xml): All indexable URLs.
+
+## Optional
+
+- [Legal & Privacy](https://ayaankhan.dev/#legal): Site operator, privacy notice and data-protection rights under the Swiss FADP.

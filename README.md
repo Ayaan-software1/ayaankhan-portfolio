@@ -46,4 +46,24 @@ js/hero3d.js      Three.js wireframe hero (desktop only; gradient fallback elsew
 img/              project thumbnails (16:9 screenshots)
 favicon.svg       favicon
 CNAME             custom domain for GitHub Pages
+index.html.md     Markdown version of the homepage, for AI agents
+llms.txt          agent guide (llmstxt.org), incl. when to use this site
+sitemap.xml       sitemap (bump <lastmod> with the JSON-LD dateModified)
+404.html          not-found page
+.nojekyll         serve files raw (keeps .md as text/markdown)
+edge/             optional Cloudflare Worker: Accept: text/markdown negotiation
+tests/            node --test
 ```
+
+## Markdown content negotiation (optional, needs Cloudflare)
+
+GitHub Pages can't vary responses by `Accept` header. To serve Markdown to agents
+that send `Accept: text/markdown` (and Markdown 404s), put the domain behind
+Cloudflare and deploy the worker:
+
+1. Add `ayaankhan.dev` as a Cloudflare zone and switch the domain's nameservers to it.
+2. Recreate the four GitHub Pages `A` records there, **proxied** (orange cloud).
+   SSL/TLS mode: *Full*.
+3. `cd edge && npx wrangler deploy`
+4. Check: `curl -sS -i -H 'Accept: text/markdown' https://ayaankhan.dev/` returns
+   `Content-Type: text/markdown` and `Vary: Accept`.

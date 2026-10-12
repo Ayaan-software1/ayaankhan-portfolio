@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Personal portfolio for ayaankhan.dev — a one-page static site (hero, about, timeline, projects, skills, contact). No build step, no package manager, no tests. Plain HTML/CSS/JS; GSAP + ScrollTrigger and Three.js come from the jsDelivr CDN.
+Personal portfolio for ayaankhan.dev — a one-page static site (hero, about, timeline, projects, skills, contact). No build step, no package manager. Plain HTML/CSS/JS; GSAP + ScrollTrigger and Three.js come from the jsDelivr CDN.
 
 ## Developing
 
@@ -13,6 +13,8 @@ Open `index.html` directly in a browser, or serve the folder:
 ```
 python -m http.server 8000
 ```
+
+Tests (Node's built-in runner, no dependencies): `node --test`. They cover the agent-facing files and `edge/worker.js`.
 
 Deployed via GitHub Pages from `main` / root, with the custom domain in `CNAME`. Pushing to `main` publishes the site.
 
@@ -66,6 +68,15 @@ Two hard-won constraints:
 Unfocused/automated Chrome windows throttle `requestAnimationFrame` to ~1fps — or suspend it entirely when occluded — which makes GSAP tweens, scrub smoothing, and ScrollTrigger updates look frozen or broken when they're fine. Reports of "black flash on nav", "smudges near headings", or the orb stuck over content from automated browsing sessions are this artifact. Verify scroll behavior with real clicks/scrolls (which focus the window), and check trigger state via JS (`ScrollTrigger.getAll()`, computed styles) rather than trusting screenshots of mid-animation states.
 
 When extension-based screenshots fail (frozen renderer), `chrome.exe --headless=new --screenshot=... --window-size=1280,720 --virtual-time-budget=8000 <url>` is a reliable fallback for static captures. Note the hero is `min-height: 100svh`, so tall-window full-page shots show mostly hero; screenshot a minimal test page that links `css/style.css` to inspect a deeper section in isolation.
+
+## Agent-facing files
+
+- `index.html.md` — Markdown twin of the homepage (linked via `<link rel="alternate" type="text/markdown">`). **When you change visible content in `index.html`, update it too**; `tests/site.test.mjs` checks sections and project titles match.
+- `llms.txt` (llmstxt.org format, with a "When to use this site" section), `sitemap.xml`, `Sitemap:` line in `robots.txt`.
+- JSON-LD `@graph` (WebSite, ProfilePage, Person with contactPoint + PostalAddress) in the `index.html` head. When content changes, bump `ProfilePage.dateModified` and the sitemap `<lastmod>` together (a test enforces they match).
+- `404.html` — served by Pages for every missing path, so all its URLs are root-absolute.
+- `.nojekyll` — stops Jekyll so `.md` files are served raw as `text/markdown`. Don't remove.
+- `edge/worker.js` — Cloudflare Worker for `Accept: text/markdown` negotiation (homepage → `index.html.md`, Markdown 404 bodies, `Vary: Accept`). GitHub Pages can't do this itself; the worker only takes effect if the domain is proxied through Cloudflare and deployed with `edge/wrangler.toml`. Keep its 404 text in sync with `404.html`.
 
 ## SEO state
 
