@@ -26,7 +26,8 @@ Deployed via GitHub Pages from `main` / root, with the custom domain in `CNAME`.
 - `js/hero3d.js` — the 3D rings object and its scroll-driven journey (see below). Dynamically imports Three.js as an ES module only on desktop-class devices; otherwise adds `no-3d` to `<body>`, which shows a CSS gradient fallback instead.
 - `js/ascii-bg.js` — full-page WebGL ASCII-glyph noise field behind everything (`#ascii-bg`, `z-index: -2`); swells and ripples around the cursor, drifts with scroll. Raw WebGL, self-contained, same motion gates.
 - `css/style.css` — dark monochrome theme, custom cursor, tooltips, reveal/accordion styles.
-- `img/` — 16:9 project thumbnails (real screenshots of each project).
+- `img/` — 16:9 project thumbnails (real screenshots of each project). Escape the Gym's is a gameplay GIF (768×432, recorded headless from the real game by a scripted bot, pillarboxed onto `--bg-soft`) inside a `<picture>` whose `prefers-reduced-motion: reduce` source swaps in a still `.webp` frame.
+- `downloads/` — files visitors can download. `escape-the-gym.zip` is the pygame game (code, assets, README, requirements, the font's `OFL.txt`; no `leaderboard.json`, which holds classmates' names). Its size is quoted in the card's link text and in `index.html.md`; update both if the zip changes.
 - `og-image.png` — 1200×630 link-preview image referenced by the `og:`/`twitter:` meta tags (absolute URLs). It's a headless-Chrome screenshot of `og/template.html`; edit the template and regenerate with the command in its header comment rather than editing the PNG.
 
 Conventions that span files:
@@ -35,6 +36,14 @@ Conventions that span files:
 - **Motion gates**: every effect (custom cursor, particle text, 3D, ASCII field) is gated behind a "desktop-class" check — `(pointer: fine)` **or** `navigator.userAgentData.mobile === false` — plus no `prefers-reduced-motion`; the 3D additionally requires `innerWidth >= 768` at load. Keep new effects behind the same gates. The UA-CH half exists because Chrome on Windows touchscreen laptops reports `pointer: coarse` and `any-pointer: fine` = false even with a touchpad, which hid every effect on the owner's own laptop. Don't narrow it back to `(pointer: fine)` alone.
 - **Behavior classes**: `.magnetic` / `.magnetic-card` opt into magnetic hover, `.reveal` into scroll-triggered fade-in, `.tooltip` + `data-tip` renders a CSS tooltip.
 - Script order in `index.html` matters: GSAP + ScrollTrigger CDN scripts, then `main.js`, then `hero-text.js`, then `hero3d.js` (hero3d assumes GSAP globals exist; hero-text is self-contained).
+
+## Project accordions
+
+Each card follows the "custom accordion" pattern from modern-web-guidance (`accordion`, `search-hidden-content`): a `<button class="project__toggle">` *inside* the `<h3>` (a heading inside a button is invalid and screen readers drop it), and the collapsed `.project__body-inner` carries `hidden="until-found"` so find-in-page and `#:~:text=` links can still open it. `main.js` removes `hidden` before adding `.is-open` (so the grid-rows expand animates), restores it on the body's `transitionend` after closing, and listens for `beforematch` to sync `.is-open`/`aria-expanded`. The toggle's `::after` stretches over `.project__head` so the whole head stays clickable; the custom cursor frames the head for it. Never put `display`/`visibility` rules on `.project__body-inner`. In Safari (no `until-found`) it degrades to plain `hidden`: the accordion still works, the text just isn't findable while collapsed.
+
+## Third-party scripts
+
+The GSAP `<script>` tags are version-pinned with SRI (`integrity` sha384 + `crossorigin="anonymous"` + `referrerpolicy="no-referrer"`); a test enforces it. When bumping GSAP, recompute both hashes from the new files (`openssl dgst -sha384 -binary f.min.js | openssl base64 -A`) or the scripts are blocked and every effect dies. A `<meta name="referrer" content="strict-origin-when-cross-origin">` is the document-wide baseline.
 
 ## Reveal system (don't regress this)
 

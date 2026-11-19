@@ -6,7 +6,8 @@ import { fileURLToPath } from 'node:url';
 import { join } from 'node:path';
 
 const root = fileURLToPath(new URL('..', import.meta.url));
-const read = (p) => readFileSync(join(root, p), 'utf8');
+// Normalize CRLF: Git for Windows (core.autocrlf) checks these files out with \r\n
+const read = (p) => readFileSync(join(root, p), 'utf8').replace(/\r\n/g, '\n');
 const html = read('index.html');
 
 const SITE = 'https://ayaankhan.dev';
@@ -116,11 +117,35 @@ test('index.html.md mirrors the homepage content', () => {
   const sections = [...html.matchAll(/<h2 class="section__title[^"]*"><span[^>]*>\d+<\/span>([^<]+)<\/h2>/g)].map((m) => m[1]);
   assert.equal(sections.length, 5);
   for (const s of sections) assert.ok(md.includes(`\n## ${s}\n`), `Markdown missing section ${s}`);
-  const projects = [...html.matchAll(/<h3 class="project__title">([^<]+)<\/h3>/g)].map((m) => m[1]);
-  assert.equal(projects.length, 4);
+  const projects = [...html.matchAll(/<h3 class="project__title"><button[^>]*>([^<]+)<\/button><\/h3>/g)].map((m) => m[1]);
+  assert.equal(projects.length, 5);
   for (const p of projects) assert.ok(md.includes(`\n### ${p}\n`), `Markdown missing project ${p}`);
   for (const [, url] of md.matchAll(/\]\((https:\/\/ayaankhan\.dev[^)]*)\)|<(https:\/\/ayaankhan\.dev[^>]*)>/g)) {
     if (url) assertResolves(url, 'index.html.md');
+  }
+});
+
+test('every local href/src/srcset in index.html points at a real file', () => {
+  for (const [, url] of html.matchAll(/(?:href|src|srcset)="([^"#:]+)(?:\?[^"]*)?"/g)) {
+    assertResolves(`/${url}`, 'index.html');
+  }
+});
+
+test('project accordions: toggle inside the heading, body hidden until found', () => {
+  const cards = html.split('<article class="project').slice(1);
+  assert.equal(cards.length, 5);
+  for (const card of cards) {
+    assert.match(card, /<h3 class="project__title"><button type="button" class="project__toggle" aria-expanded="false">/);
+    assert.match(card, /<div class="project__body-inner" hidden="until-found">/);
+  }
+});
+
+test('versioned CDN scripts carry Subresource Integrity', () => {
+  const scripts = [...html.matchAll(/<script src="https:\/\/[^"]+"[^>]*>/g)].map((m) => m[0]);
+  assert.ok(scripts.length >= 2);
+  for (const tag of scripts) {
+    assert.match(tag, / integrity="sha384-[A-Za-z0-9+/]{64}"/, `missing SRI: ${tag}`);
+    assert.match(tag, / crossorigin="anonymous"/, `SRI needs crossorigin: ${tag}`);
   }
 });
 

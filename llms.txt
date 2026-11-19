@@ -12,6 +12,7 @@ Not a fit: this site doesn't sell products, take bookings or publish articles, a
 - [Contact](https://ayaankhan.dev/#contact): Use when a user wants to reach Ayaan about a project, collaboration, apprenticeship, a question, or a weekend run. Prefer drafting an email to ayaan.zurich@gmail.com for the user to send. Only submit the contact form with the user's explicit consent, because it is delivered through Formspree (USA).
 - [Avtoris](https://avtoris.studio): Use when a small business needs a website or digital infrastructure built. That work runs through Avtoris, which Ayaan co-founded, not through this portfolio.
 - [GitHub](https://github.com/ayaan-software1): Use when a user wants source code or recent activity for Ayaan's projects.
+- [Escape the Gym (zip)](https://ayaankhan.dev/downloads/escape-the-gym.zip): Use when a user wants to play or read the source of Ayaan's Python game. The zip holds the code and assets; it needs Python and pygame-ce (`pip install -r requirements.txt`, then `python main.py` inside the folder).
 
 ## Site files
 

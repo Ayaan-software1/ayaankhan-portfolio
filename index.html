@@ -4,6 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="robots" content="index, follow">
+  <!-- Baseline for every cross-origin request (fonts, CDN, Formspree): send the origin, never the path -->
+  <meta name="referrer" content="strict-origin-when-cross-origin">
   <meta name="description" content="Ayaan Khan, software developer from Zurich: Applikationsentwickler EFZ in the making and co-founder of Avtoris. Projects, timeline and contact.">
   <title>Ayaan Khan · Software Developer in Zurich</title>
   <!-- ?v= forces browsers to drop cached icons; bump it when the logo changes -->
@@ -33,7 +35,7 @@
         "name": "Ayaan Khan · Software Developer in Zurich",
         "isPartOf": { "@id": "https://ayaankhan.dev/#website" },
         "mainEntity": { "@id": "https://ayaankhan.dev/#person" },
-        "dateModified": "2026-10-12"
+        "dateModified": "2026-11-19"
       },
       {
         "@type": "Person",
@@ -157,6 +159,12 @@
               starting with a website that actually works for them.
             </p>
             <p class="reveal">
+              I'm also a contributor to
+              <a class="about__link" href="https://holmnotch.ch" target="_blank" rel="noopener noreferrer">Holm</a>,
+              an open-source, Dynamic Island-style notch for Windows
+              (<a class="about__link" href="https://github.com/ademerci/Holm" target="_blank" rel="noopener noreferrer">GitHub</a>).
+            </p>
+            <p class="reveal">
               Off the keyboard, you'll find me at John&nbsp;Reed lifting, or
               training toward an Ironman.
             </p>
@@ -168,6 +176,7 @@
             <li><span>Languages</span>DE · CH-DE · EN · HI/UR</li>
             <li><span>Now</span>Basisjahr @ BBC</li>
             <li><span>Building</span><div><a class="about__link" href="https://avtoris.studio" target="_blank" rel="noopener noreferrer">Avtoris</a> · Co-founder</div></li>
+            <li><span>Open source</span><div><a class="about__link" href="https://github.com/ademerci/Holm" target="_blank" rel="noopener noreferrer">Holm</a> · Contributor</div></li>
             <li><span>Next</span>EFZ @ Google</li>
             </ul>
           </div>
@@ -196,6 +205,11 @@
             <h3 class="timeline__title">Basisjahr @ BBC Altstetten, getting ready for the Google apprenticeship</h3>
           </li>
           <li class="timeline__item reveal">
+            <div class="timeline__dot timeline__dot--now"></div>
+            <p class="timeline__date">Since 11.2026</p>
+            <h3 class="timeline__title">Contributor to <a class="about__link" href="https://holmnotch.ch" target="_blank" rel="noopener noreferrer">Holm</a>, an open-source notch for Windows</h3>
+          </li>
+          <li class="timeline__item reveal">
             <div class="timeline__dot"></div>
             <p class="timeline__date">Next year</p>
             <h3 class="timeline__title">@ Google building for billions</h3>
@@ -208,19 +222,43 @@
     <section class="section" id="projects">
       <div class="section__inner">
         <h2 class="section__title reveal"><span class="section__num">03</span>Projects</h2>
+        <!-- Each card is a custom accordion: the toggle button sits inside the
+             heading (a heading inside a button gets dropped by screen readers),
+             and the collapsed body is hidden="until-found" so find-in-page can
+             still reach it. main.js wires the toggle. -->
         <div class="projects">
 
           <article class="project reveal magnetic-card">
-            <div class="project__thumb" aria-hidden="true"><img src="img/project-inside-glattbrugg.webp" alt="" width="1280" height="720" loading="lazy"></div>
-            <button class="project__head" aria-expanded="false">
+            <!-- Gameplay GIF; reduced-motion visitors get a still frame instead -->
+            <div class="project__thumb" aria-hidden="true"><picture><source srcset="img/project-escape-the-gym.webp" media="(prefers-reduced-motion: reduce)"><img src="img/project-escape-the-gym.gif" alt="" width="768" height="432" loading="lazy"></picture></div>
+            <div class="project__head">
               <div>
-                <h3 class="project__title">Inside Glattbrugg</h3>
+                <h3 class="project__title"><button type="button" class="project__toggle" aria-expanded="false">Escape the Gym</button></h3>
+                <p class="project__oneliner">A pixel-art game in Python: collect 100 power, dodge three gym monsters, escape. Free to download and play.</p>
+              </div>
+              <span class="project__chevron" aria-hidden="true">↓</span>
+            </div>
+            <div class="project__body">
+              <div class="project__body-inner" hidden="until-found">
+                <p>My project for the <span lang="de">«Einstieg Programmierung»</span> module at BBC, built with pygame-ce. You're locked in the gym and the door only opens at 100 power, which you earn by holding E at the machines. The Cardio Ghost, Deadlift Demon and Leg Day Monster chase you once you're in sight and drain your power on contact. The fastest escapes make the top-5 leaderboard. Pixel art by my sister Zaara.</p>
+                <p class="project__download-note">Needs Python (tested on 3.14): unzip, run <code>pip install -r requirements.txt</code>, then <code>python main.py</code> inside the folder.</p>
+                <a class="btn btn--ghost magnetic project__download" href="downloads/escape-the-gym.zip" download type="application/zip">Download the game (.zip, 104&nbsp;KB)</a>
+                <ul class="project__tags"><li>Python</li><li>pygame-ce</li><li>OOP</li></ul>
+              </div>
+            </div>
+          </article>
+
+          <article class="project reveal magnetic-card">
+            <div class="project__thumb" aria-hidden="true"><img src="img/project-inside-glattbrugg.webp" alt="" width="1280" height="720" loading="lazy"></div>
+            <div class="project__head">
+              <div>
+                <h3 class="project__title"><button type="button" class="project__toggle" aria-expanded="false">Inside Glattbrugg</button></h3>
                 <p class="project__oneliner">A web deep-dive into Glattbrugg, the place I grew up. There's more to it than the flight path.</p>
               </div>
               <span class="project__chevron" aria-hidden="true">↓</span>
-            </button>
+            </div>
             <div class="project__body">
-              <div class="project__body-inner">
+              <div class="project__body-inner" hidden="until-found">
                 <p>A static site documenting my hometown: the spots that matter, the people, and what living next to an airport actually feels like. Built to practice layout, typography and storytelling on the web.</p>
                 <ul class="project__tags"><li>HTML</li><li>CSS</li><li>JavaScript</li></ul>
               </div>
@@ -229,15 +267,15 @@
 
           <article class="project reveal magnetic-card">
             <div class="project__thumb" aria-hidden="true"><img src="img/project-screentime.webp" alt="" width="1280" height="720" loading="lazy"></div>
-            <button class="project__head" aria-expanded="false">
+            <div class="project__head">
               <div>
-                <h3 class="project__title">Screen Time Reality Check</h3>
+                <h3 class="project__title"><button type="button" class="project__toggle" aria-expanded="false">Screen Time Reality Check</button></h3>
                 <p class="project__oneliner">Turns your weekly screen time into uncomfortably honest numbers.</p>
               </div>
               <span class="project__chevron" aria-hidden="true">↓</span>
-            </button>
+            </div>
             <div class="project__body">
-              <div class="project__body-inner">
+              <div class="project__body-inner" hidden="until-found">
                 <p>Enter your weekly screen time and it tells you what that adds up to over a year: books unread, runs not run and hours of sleep lost. A small tool with a big guilt trip, built in vanilla JS.</p>
                 <ul class="project__tags"><li>JavaScript</li><li>CSS</li></ul>
               </div>
@@ -246,15 +284,15 @@
 
           <article class="project reveal magnetic-card">
             <div class="project__thumb project__thumb--light" aria-hidden="true"><img src="img/project-gmail-digest.webp" alt="" width="727" height="409" loading="lazy"></div>
-            <button class="project__head" aria-expanded="false">
+            <div class="project__head">
               <div>
-                <h3 class="project__title">Gmail Digest Bot</h3>
+                <h3 class="project__title"><button type="button" class="project__toggle" aria-expanded="false">Gmail Digest Bot</button></h3>
                 <p class="project__oneliner">An automated summarizer that turns inbox chaos into one clean daily digest.</p>
               </div>
               <span class="project__chevron" aria-hidden="true">↓</span>
-            </button>
+            </div>
             <div class="project__body">
-              <div class="project__body-inner">
+              <div class="project__body-inner" hidden="until-found">
                 <p>An automated email summarizer built with Claude Cowork that reads through my inbox and generates a clean digest, so I stop drowning in email. n8n-based automation planned as the next upgrade.</p>
                 <ul class="project__tags"><li>Claude Cowork</li><li>Gmail</li><li>Automation</li></ul>
               </div>
@@ -263,15 +301,15 @@
 
           <article class="project reveal magnetic-card">
             <div class="project__thumb" aria-hidden="true"><img src="img/project-prayer-times.webp" alt="" width="1167" height="656" loading="lazy"></div>
-            <button class="project__head" aria-expanded="false">
+            <div class="project__head">
               <div>
-                <h3 class="project__title">Prayer Times Widget</h3>
+                <h3 class="project__title"><button type="button" class="project__toggle" aria-expanded="false">Prayer Times Widget</button></h3>
                 <p class="project__oneliner">An iOS home-screen widget showing today's prayer times for Zurich.</p>
               </div>
               <span class="project__chevron" aria-hidden="true">↓</span>
-            </button>
+            </div>
             <div class="project__body">
-              <div class="project__body-inner">
+              <div class="project__body-inner" hidden="until-found">
                 <p>Written in JavaScript with Scriptable. Fetches prayer times for Zurich, caches them for offline use, and highlights the next prayer with a countdown, so you see it at a glance right on your home screen.</p>
                 <ul class="project__tags"><li>Scriptable</li><li>JavaScript</li><li>iOS</li></ul>
               </div>
@@ -404,9 +442,11 @@
     </details>
   </footer>
 
-  <!-- GSAP + ScrollTrigger -->
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <!-- GSAP + ScrollTrigger, pinned and integrity-checked (SRI). Bumping the
+       version means recomputing both hashes from the new files:
+       openssl dgst -sha384 -binary gsap.min.js | openssl base64 -A -->
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js" integrity="sha384-g4NTh/Iv5PPU4xPyhEWqPcwtNXOvdaDI8LLnyYfyNZOjKJeYQyjzQ9X5275eBjpt" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js" integrity="sha384-Z3REaz79l2IaAZqJsSABtTbhjgOUYyV3p90XNnAPCSHg3EMTz1fouunq9WZRtj3d" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="js/main.js"></script>
   <script src="js/hero-text.js"></script>
   <script src="js/ascii-bg.js"></script>

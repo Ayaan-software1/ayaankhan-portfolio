@@ -43,7 +43,8 @@ css/style.css     dark theme, custom cursor, tooltips, reveal styles
 js/main.js        cursor + magnetic hover, GSAP scroll reveals, accordions, form
 js/hero-text.js   particle text effect on the hero name (desktop only)
 js/hero3d.js      Three.js wireframe hero (desktop only; gradient fallback elsewhere)
-img/              project thumbnails (16:9 screenshots)
+img/              project thumbnails (16:9 screenshots; Escape the Gym is a gameplay GIF)
+downloads/        downloadable files (escape-the-gym.zip, the pygame game)
 favicon.svg       favicon
 CNAME             custom domain for GitHub Pages
 index.html.md     Markdown version of the homepage, for AI agents

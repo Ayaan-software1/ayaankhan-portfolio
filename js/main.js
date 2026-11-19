@@ -42,6 +42,8 @@
 
     document.addEventListener("mouseover", (e) => {
       locked = e.target.closest(lockTargets);
+      // A project toggle's click area is its whole head, so frame that
+      if (locked && locked.matches(".project__toggle")) locked = locked.closest(".project__head");
       frame.classList.toggle("is-locked", !!locked);
       dot.classList.toggle("is-locked", !!locked);
     });
@@ -159,13 +161,33 @@
     });
   }
 
-  /* ---------- Project accordions ---------- */
-  document.querySelectorAll(".project__head").forEach((head) => {
-    head.addEventListener("click", () => {
-      const project = head.closest(".project");
-      const open = project.classList.toggle("is-open");
-      head.setAttribute("aria-expanded", String(open));
+  /* ---------- Project accordions ----------
+     Collapsed bodies are hidden="until-found": out of the accessibility
+     tree, but find-in-page can still match and open them. The attribute
+     comes off before the grid-rows expand and goes back on once the
+     collapse transition ends, so both directions still animate. */
+  document.querySelectorAll(".project").forEach((project) => {
+    const toggle = project.querySelector(".project__toggle");
+    const body = project.querySelector(".project__body");
+    const inner = project.querySelector(".project__body-inner");
+    if (!toggle || !body || !inner) return;
+
+    const setOpen = (open) => {
+      if (open) inner.removeAttribute("hidden");
+      project.classList.toggle("is-open", open);
+      toggle.setAttribute("aria-expanded", String(open));
+    };
+
+    toggle.addEventListener("click", () => {
+      setOpen(!project.classList.contains("is-open"));
     });
+    body.addEventListener("transitionend", (e) => {
+      if (e.target === body && !project.classList.contains("is-open")) {
+        inner.setAttribute("hidden", "until-found");
+      }
+    });
+    // Find-in-page already removed `hidden`; mirror it into the card state
+    inner.addEventListener("beforematch", () => setOpen(true));
   });
 
   /* ---------- Links to #legal open the footer's Legal & Privacy ---------- */
