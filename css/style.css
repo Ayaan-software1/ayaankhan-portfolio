@@ -446,6 +446,8 @@ body.no-3d .hero__glow { display: block; }
   letter-spacing: 0.08em;
   color: rgba(255, 255, 255, 0.16);
 }
+/* <picture> (GIF + reduced-motion still) must not become the flex item */
+.project__thumb picture { display: contents; }
 /* Screenshot thumbs stay greyscale to hold the monochrome palette;
    hovering the card lets the project's real colors through. */
 .project__thumb img {
@@ -463,19 +465,20 @@ body.no-3d .hero__glow { display: block; }
 .project__thumb--light img { filter: grayscale(1) brightness(0.4) contrast(1.2); }
 .project:hover .project__thumb--light img { filter: grayscale(0) brightness(1) contrast(1); }
 
+/* The toggle button lives inside the h3; its ::after stretches over the
+   whole head so the title, one-liner and chevron all stay one click target */
 .project__head {
-  width: 100%;
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 1.25rem;
   padding: 1.6rem 1.8rem;
-  background: none;
-  border: none;
-  color: inherit;
-  font: inherit;
-  text-align: left;
-  cursor: pointer;
+}
+.project__head:has(.project__toggle:focus-visible) {
+  outline: 2px solid var(--accent);
+  outline-offset: -6px;
+  border-radius: 12px;
 }
 
 .project__title {
@@ -483,6 +486,22 @@ body.no-3d .hero__glow { display: block; }
   font-size: 1.15rem;
   font-weight: 600;
   margin-bottom: 0.2rem;
+}
+
+.project__toggle {
+  background: none;
+  border: none;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.project__toggle:focus-visible { outline: none; }
+.project__toggle::after {
+  content: "";
+  position: absolute;
+  inset: 0;
 }
 .project__oneliner { color: var(--muted); font-size: 0.97rem; }
 
@@ -494,7 +513,10 @@ body.no-3d .hero__glow { display: block; }
 }
 .project.is-open .project__chevron { transform: rotate(180deg); }
 
-/* Smooth expand via grid-rows trick */
+/* Smooth expand via grid-rows trick. The inner element carries
+   hidden="until-found" while collapsed (main.js removes it before opening
+   and restores it after the close transition) — never give that element a
+   display or visibility rule, or find-in-page can't reveal it. */
 .project__body {
   display: grid;
   grid-template-rows: 0fr;
@@ -508,6 +530,17 @@ body.no-3d .hero__glow { display: block; }
   color: var(--muted);
 }
 .project.is-open .project__body-inner { padding-bottom: 1.75rem; }
+
+.project__download-note { margin-top: 0.75rem; font-size: 0.9rem; }
+.project__download-note code {
+  font-size: 0.85em;
+  padding: 0.1em 0.4em;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--text);
+  white-space: nowrap;
+}
+.project__download { margin-top: 1rem; }
 
 .project__tags {
   list-style: none;

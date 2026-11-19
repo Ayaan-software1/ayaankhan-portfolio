@@ -12,12 +12,15 @@ Currently finishing my Basisjahr at BBC, learning how to build great things befo
 
 On the side, I'm co-founder of [Avtoris](https://avtoris.studio). We help small businesses build their digital infrastructure, starting with a website that actually works for them.
 
+I'm also a contributor to [Holm](https://holmnotch.ch), an open-source, Dynamic Island-style notch for Windows ([GitHub](https://github.com/ademerci/Holm)).
+
 Off the keyboard, you'll find me at John Reed lifting, or training toward an Ironman.
 
 - **Base:** Zurich, Switzerland
 - **Languages:** DE · CH-DE · EN · HI/UR
 - **Now:** Basisjahr @ BBC
 - **Building:** [Avtoris](https://avtoris.studio) · Co-founder
+- **Open source:** [Holm](https://github.com/ademerci/Holm) · Contributor
 - **Next:** EFZ @ Google
 
 ## Timeline
@@ -25,9 +28,20 @@ Off the keyboard, you'll find me at John Reed lifting, or training toward an Iro
 - **10.07.2026:** Finished Sekundarstufe @ Schulhaus Halden
 - **Since 08.2026:** Co-founded [Avtoris](https://avtoris.studio), building websites for small businesses
 - **Now:** Basisjahr @ BBC Altstetten, getting ready for the Google apprenticeship
+- **Since 11.2026:** Contributor to [Holm](https://holmnotch.ch), an open-source notch for Windows
 - **Next year:** @ Google building for billions
 
 ## Projects
+
+### Escape the Gym
+
+A pixel-art game in Python: collect 100 power, dodge three gym monsters, escape. Free to download and play.
+
+My project for the «Einstieg Programmierung» module at BBC, built with pygame-ce. You're locked in the gym and the door only opens at 100 power, which you earn by holding E at the machines. The Cardio Ghost, Deadlift Demon and Leg Day Monster chase you once you're in sight and drain your power on contact. The fastest escapes make the top-5 leaderboard. Pixel art by my sister Zaara.
+
+Download: [escape-the-gym.zip](https://ayaankhan.dev/downloads/escape-the-gym.zip) (104 KB). Needs Python (tested on 3.14): unzip, run `pip install -r requirements.txt`, then `python main.py` inside the folder. Gameplay preview: <https://ayaankhan.dev/img/project-escape-the-gym.gif>
+
+Tags: Python, pygame-ce, OOP
 
 ### Inside Glattbrugg
 
